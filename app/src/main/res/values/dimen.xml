@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="spinner_padding">10dp</dimen>
+    <dimen name="dimen_padding_default">15dp</dimen>
+    <dimen name="dimen_margin_default">10dp</dimen>
+    <dimen name="dimen_margin_small">5dp</dimen>
+    <dimen name="dimen_movie_poster_width">120dp</dimen>
+    <dimen name="dimen_movie_poster_height">180dp</dimen>
+    <dimen name="dimen_text_title">18sp</dimen>
+    <dimen name="dimen_arrow_width">10dp</dimen>
+    <dimen name="dimen_arrow_height">26dp</dimen>
+    <dimen name="dimen_divider_height">1dp</dimen>
+    <dimen name="dimen_movie_grid_item_height_portrait">300dp</dimen>
+    <dimen name="dimen_movie_grid_item_height_landscape">260dp</dimen>
+</resources>

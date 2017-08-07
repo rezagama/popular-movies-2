@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="progressVisibility"
+            type="int" />
+        <variable
+            name="progressTxt"
+            type="String" />
+        <variable
+            name="sortByTxt"
+            type="String" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.example.popularmovies.home.HomeActivity">
+
+        <LinearLayout
+            android:id="@+id/layout_sort_by"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spinner_padding">
+            <TextView
+                android:layout_weight=".50"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="start|center"
+                android:text="@string/text_sort_by"
+                android:textColor="@color/textPrimary" />
+
+            <TextView
+                android:id="@+id/text_sort_option"
+                android:layout_weight=".50"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="start|center"
+                android:text="@{sortByTxt}"
+                android:drawableRight="@drawable/ic_arrow_down"
+                android:drawableEnd="@drawable/ic_arrow_down"
+                android:textColor="@color/textPrimary" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/layout_movie_grid"
+            android:layout_below="@+id/layout_sort_by"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:text="@{progressTxt}"
+            android:textColor="@color/textPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:visibility="@{progressVisibility}"/>
+    </RelativeLayout>
+</layout>

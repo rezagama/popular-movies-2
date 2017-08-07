@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+    <string name="text_sort_by">Sort by</string>
+    <string name="text_please_wait">Please wait …</string>
+    <string name="text_error">Something doesn\'t feels right.\nPlease try again.</string>
+    <string-array name="sort_by_options">
+        <item>Popularity</item>
+        <item>Top Rated</item>
+    </string-array>
+    <string name="text_movie_detail">Movie Detail</string>
+    <string name="text_average_vote">Average Vote</string>
+    <string name="text_release_date">Release Date</string>
+    <string name="text_popularity">Popularity</string>
+    <string name="text_top_rated">Top Rated</string>
+    <string name="text_sort_by_title">Sort By</string>
+</resources>

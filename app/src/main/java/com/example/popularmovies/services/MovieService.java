@@ -1,9 +1,11 @@
 package com.example.popularmovies.services;
 
+import com.example.popularmovies.detail.model.MovieTrailer;
 import com.example.popularmovies.home.model.Movie;
 import com.example.popularmovies.network.NetworkCallback;
 import com.example.popularmovies.network.NetworkService;
 
+import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -24,6 +26,7 @@ public class MovieService {
         return service.getMovieList(sortBy)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(Observable::error)
                 .subscribe(new Subscriber<Movie>() {
                     @Override
                     public void onCompleted() {
@@ -37,6 +40,29 @@ public class MovieService {
 
                     @Override
                     public void onNext(Movie movie) {
+                        callback.onSuccess(movie);
+                    }
+                });
+    }
+
+    public Subscription getMovieTrailers(int movieId, NetworkCallback<MovieTrailer, Throwable> callback){
+        return service.getMovieTrailers(movieId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(Observable::error)
+                .subscribe(new Subscriber<MovieTrailer>() {
+                    @Override
+                    public void onCompleted() {
+                        callback.onCompleted();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(e);
+                    }
+
+                    @Override
+                    public void onNext(MovieTrailer movie) {
                         callback.onSuccess(movie);
                     }
                 });

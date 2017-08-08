@@ -1,5 +1,6 @@
 package com.example.popularmovies.network;
 
+import com.example.popularmovies.detail.model.MovieReview;
 import com.example.popularmovies.detail.model.MovieTrailer;
 import com.example.popularmovies.home.model.Movie;
 
@@ -16,4 +17,6 @@ public interface NetworkService {
     Observable<Movie> getMovieList(@Path("sort_by") String sortBy);
     @GET("movie/{id}/videos")
     Observable<MovieTrailer> getMovieTrailers(@Path("id") int movieId);
+    @GET("movie/{id}/reviews")
+    Observable<MovieReview> getMovieReviews(@Path("id") int movieId);
 }

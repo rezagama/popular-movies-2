@@ -2,6 +2,7 @@ package com.example.popularmovies.detail;
 
 import android.os.Bundle;
 
+import com.example.popularmovies.detail.model.MovieReview;
 import com.example.popularmovies.detail.model.MovieTrailer;
 
 /**
@@ -11,9 +12,11 @@ import com.example.popularmovies.detail.model.MovieTrailer;
 public interface MovieDetailView {
     void onViewCreated(Bundle savedInstanceState);
 
-    void reloadMovieTrailers(Bundle savedInstanceState);
+    void reloadMovieDetails(Bundle savedInstanceState);
 
     void onLoadMovieTrailers(MovieTrailer movieTrailer);
 
-    void loadMovieTrailers();
+    void onLoadMovieReviews(MovieReview movieReview);
+
+    void loadMovieDetails();
 }

@@ -53,10 +53,10 @@ public class MovieProvider extends ContentProvider {
 
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder){
-        Cursor retCursor;
+        Cursor cursor;
         switch(sUriMatcher.match(uri)){
             case MOVIE:
-                retCursor = movieDBHelper.getReadableDatabase().query(
+                cursor = movieDBHelper.getReadableDatabase().query(
                         MovieContract.MovieEntry.MOVIE_TABLE,
                         projection,
                         selection,
@@ -64,9 +64,9 @@ public class MovieProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder);
-                return retCursor;
+                return cursor;
             case MOVIE_WITH_ID:
-                retCursor = movieDBHelper.getReadableDatabase().query(
+                cursor = movieDBHelper.getReadableDatabase().query(
                         MovieContract.MovieEntry.MOVIE_TABLE,
                         projection,
                         MovieContract.MovieEntry.COLUMN_MOVIE_ID + " = ?",
@@ -74,7 +74,7 @@ public class MovieProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder);
-                return retCursor;
+                return cursor;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }

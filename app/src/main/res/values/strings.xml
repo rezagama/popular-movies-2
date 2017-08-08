@@ -14,4 +14,5 @@
     <string name="text_top_rated">Top Rated</string>
     <string name="text_sort_by_title">Sort By</string>
     <string name="text_trailers">Trailers</string>
+    <string name="text_reviews">Reviews</string>
 </resources>

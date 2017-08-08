@@ -19,7 +19,6 @@ import java.util.List;
 
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerViewHolder> {
     private List<TrailerDetail> trailers;
-    private MovieTrailer movieTrailer;
     private OnClickListener listener;
 
     public TrailerAdapter(OnClickListener listener) {

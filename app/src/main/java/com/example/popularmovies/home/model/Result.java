@@ -42,6 +42,8 @@ public class Result implements Parcelable {
     @SerializedName("release_date")
     public String releaseDate;
 
+    public Result(){}
+
     private Result(Parcel in) {
         voteCount = in.readInt();
         id = in.readInt();

@@ -57,6 +57,11 @@ public class HomePresenter {
         subscriptions.add(subscription);
     }
 
+    public void getFavoriteMovieList(){
+        view.resetResults();
+        view.loadFavoritesMovie();
+    }
+
     public void onDestroy(){
         subscriptions.clear();
     }

@@ -1,18 +1,26 @@
 package com.example.popularmovies.detail;
 
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.popularmovies.R;
+import com.example.popularmovies.database.MovieContract;
 import com.example.popularmovies.databinding.ActivityMovieDetailBinding;
 import com.example.popularmovies.deps.AppDependenciesProvider;
 import com.example.popularmovies.detail.adapter.ReviewAdapter;
@@ -28,7 +36,8 @@ import javax.inject.Inject;
  * Created by rezagama on 6/30/17.
  */
 
-public class MovieDetailActivity extends AppCompatActivity implements MovieDetailView {
+public class MovieDetailActivity extends AppCompatActivity implements MovieDetailView,
+        LoaderManager.LoaderCallbacks<Cursor> {
     public final static String MOVIE_DATA = "movie_data";
     public final static String MOVIE_TRAILER = "movie_trailer";
     public final static String MOVIE_REVIEW = "movie_review";
@@ -69,6 +78,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     @Override
     public void onViewCreated(Bundle savedInstanceState) {
+        setFavoriteButton();
         reviewAdapter = new ReviewAdapter();
         trailerAdapter = new TrailerAdapter(trailer -> {
             Intent intent;
@@ -85,6 +95,60 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         binding.listMovieTrailers.setAdapter(trailerAdapter);
         binding.listMovieReviews.setAdapter(reviewAdapter);
         presenter.loadMovieDetails(savedInstanceState);
+    }
+
+    private void setFavoriteButton() {
+        binding.btnFavorite.setOnClickListener(v -> {
+            if(isFavoriteMovie()) {
+                removeMovieFromFavorite();
+            } else {
+                addMovieToFavorite();
+            }
+        });
+
+        if (isFavoriteMovie()) {
+            viewModel.setFavoriteBtnText(getString(R.string.text_remove_from_favorites));
+        } else {
+            viewModel.setFavoriteBtnText(getString(R.string.text_add_to_favorites));
+        }
+    }
+
+    private boolean isFavoriteMovie(){
+        Uri uri = ContentUris.withAppendedId(MovieContract.MovieEntry.CONTENT_URI, movie.id);
+
+        Cursor data = getContentResolver().query(uri, null,
+                MovieContract.MovieEntry.COLUMN_MOVIE_ID,
+                new String[]{String.valueOf(movie.id)},
+                null);
+
+        if(data != null && data.getCount() > 0){
+            data.close();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void addMovieToFavorite(){
+        ContentValues data = new ContentValues();
+        data.put(MovieContract.MovieEntry.COLUMN_MOVIE_ID, movie.id);
+        data.put(MovieContract.MovieEntry.COLUMN_MOVIE_TITLE, movie.title);
+        data.put(MovieContract.MovieEntry.COLUMN_MOVIE_RELEASE_DATE, movie.releaseDate);
+        data.put(MovieContract.MovieEntry.COLUMN_MOVIE_AVERAGE_VOTE, movie.voteAverage);
+        data.put(MovieContract.MovieEntry.COLUMN_MOVIE_SYNOPSIS, movie.overview);
+
+        getContentResolver().insert(MovieContract.MovieEntry.CONTENT_URI, data);
+        Toast.makeText(this, getString(R.string.text_added_to_favorites), Toast.LENGTH_SHORT).show();
+        setFavoriteButton();
+    }
+
+    public void removeMovieFromFavorite(){
+        Uri uri = ContentUris.withAppendedId(MovieContract.MovieEntry.CONTENT_URI, movie.id);
+        int deletedRow = getContentResolver().delete(uri, null, null);
+        if(deletedRow > 0){
+            Toast.makeText(this, getString(R.string.text_removed_from_favorites), Toast.LENGTH_SHORT).show();
+            setFavoriteButton();
+        }
     }
 
     @Override
@@ -155,5 +219,21 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         binding.unbind();
         presenter.onDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(this, MovieContract.MovieEntry.CONTENT_URI,
+                null, null, null, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 }

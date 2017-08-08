@@ -9,7 +9,7 @@
             name="progressTxt"
             type="String" />
         <variable
-            name="sortByTxt"
+            name="filterTxt"
             type="String" />
     </data>
     <RelativeLayout
@@ -33,12 +33,12 @@
                 android:textColor="@color/textPrimary" />
 
             <TextView
-                android:id="@+id/text_sort_option"
+                android:id="@+id/text_filter_option"
                 android:layout_weight=".50"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:gravity="start|center"
-                android:text="@{sortByTxt}"
+                android:text="@{filterTxt}"
                 android:drawableRight="@drawable/ic_arrow_down"
                 android:drawableEnd="@drawable/ic_arrow_down"
                 android:textColor="@color/textPrimary" />

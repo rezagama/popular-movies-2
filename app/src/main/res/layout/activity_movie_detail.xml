@@ -62,10 +62,21 @@
                         <TextView
                             android:text="@{viewModel.movieVote}"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <ImageButton
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dimen_margin_default" />
+                        <Button
+                            android:id="@+id/btn_favorite"
+                            android:text="@{viewModel.favoriteBtnText}"
+                            android:textColor="@android:color/white"
+                            android:textAllCaps="false"
+                            android:background="@color/colorPrimary"
+                            android:drawablePadding="@dimen/dimen_padding_small"
+                            android:drawableLeft="@drawable/ic_star_rate_white_18dp"
+                            android:drawableStart="@drawable/ic_star_rate_white_18dp"
+                            android:padding="@dimen/dimen_padding_small"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            style="@style/Widget.AppCompat.Button.Colored"/>
                     </LinearLayout>
                 </LinearLayout>
                 <TextView

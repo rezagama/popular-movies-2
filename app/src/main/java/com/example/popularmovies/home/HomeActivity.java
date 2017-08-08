@@ -15,15 +15,19 @@ import com.example.popularmovies.deps.AppDependenciesProvider;
 import com.example.popularmovies.filter.MovieFilterActivity;
 import com.example.popularmovies.home.grid.MovieGridFragment;
 import com.example.popularmovies.home.model.Movie;
+import com.example.popularmovies.home.model.Result;
 import com.example.popularmovies.services.MovieService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import static com.example.popularmovies.filter.MovieFilterActivity.SELECTED_OPTION;
 
 public class HomeActivity extends AppCompatActivity implements HomeView {
-    private static final String SORT_BY_POPULARITY_KEY = "popular";
-    private static final String SORT_BY_TOP_RATED_KEY = "top_rated";
+    private static final String FILTER_BY_POPULARITY_KEY = "popular";
+    private static final String FILTER_BY_TOP_RATED_KEY = "top_rated";
     private static final int SORT_BY_REQUEST_CODE = 1001;
 
     private HomePresenter presenter;
@@ -59,12 +63,12 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         } else {
             selectedOption = savedInstanceState.getString(SELECTED_OPTION);
         }
-        binding.setSortByTxt(selectedOption);
+        binding.setFilterTxt(selectedOption);
     }
 
     @Override
     public void loadMovieGrid() {
-        presenter.getMovieList(SORT_BY_POPULARITY_KEY);
+        presenter.getMovieList(FILTER_BY_POPULARITY_KEY);
     }
 
     private void navigateToMovieFilter(){
@@ -86,12 +90,22 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
                 !selectedOption.equals(data.getStringExtra(SELECTED_OPTION))){
             selectedOption = data.getStringExtra(SELECTED_OPTION);
             if (selectedOption.equals(getString(R.string.text_popularity))){
-                presenter.getMovieList(SORT_BY_POPULARITY_KEY);
+                presenter.getMovieList(FILTER_BY_POPULARITY_KEY);
+            } else if(selectedOption.equals(getString(R.string.text_top_rated))) {
+                presenter.getMovieList(FILTER_BY_TOP_RATED_KEY);
             } else {
-                presenter.getMovieList(SORT_BY_TOP_RATED_KEY);
+                presenter.getFavoriteMovieList();
             }
-            binding.setSortByTxt(selectedOption);
+            binding.setFilterTxt(selectedOption);
         }
+    }
+
+    @Override
+    public void loadFavoritesMovie() {
+        List<Result> results = new ArrayList<>();
+        fragmentManager.beginTransaction().replace(R.id.layout_movie_grid,
+                MovieGridFragment.newInstance(results)).commit();
+        binding.setProgressVisibility(View.GONE);
     }
 
     @Override
@@ -123,6 +137,14 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
     @Override
     public void onError() {
         binding.setProgressTxt(getString(R.string.text_error));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(selectedOption.equals(getString(R.string.text_favorites))){
+            presenter.getFavoriteMovieList();
+        }
     }
 
     @Override

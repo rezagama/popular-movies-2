@@ -13,6 +13,7 @@ import com.example.popularmovies.home.model.Result;
 
 public class MovieDetailViewModel extends BaseObservable {
     private Result result;
+    private String favoriteBtnText;
     private int progressBarVisibility;
 
     public MovieDetailViewModel(Result result) {
@@ -48,5 +49,15 @@ public class MovieDetailViewModel extends BaseObservable {
     public void setProgressBarVisibility(int progressBarVisibility) {
         this.progressBarVisibility = progressBarVisibility;
         notifyPropertyChanged(BR.progressBarVisibility);
+    }
+
+    @Bindable
+    public String getFavoriteBtnText() {
+        return favoriteBtnText;
+    }
+
+    public void setFavoriteBtnText(String favoriteBtnText) {
+        this.favoriteBtnText = favoriteBtnText;
+        notifyPropertyChanged(BR.favoriteBtnText);
     }
 }

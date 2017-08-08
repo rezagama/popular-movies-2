@@ -3,8 +3,8 @@ package com.example.popularmovies.detail;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.popularmovies.detail.model.MovieReview;
 import com.example.popularmovies.detail.model.MovieTrailer;
-import com.example.popularmovies.detail.model.TrailerDetail;
 import com.example.popularmovies.network.NetworkCallback;
 import com.example.popularmovies.services.MovieService;
 
@@ -32,11 +32,11 @@ public class MovieDetailPresenter {
         view.onViewCreated(savedInstanceState);
     }
 
-    public void loadMovieTrailers(Bundle savedInstanceState){
+    public void loadMovieDetails(Bundle savedInstanceState){
         if (savedInstanceState != null) {
-            view.reloadMovieTrailers(savedInstanceState);
+            view.reloadMovieDetails(savedInstanceState);
         } else {
-            view.loadMovieTrailers();
+            view.loadMovieDetails();
         }
     }
 
@@ -60,5 +60,31 @@ public class MovieDetailPresenter {
             }
         });
         subscriptions.add(subscription);
+    }
+
+    public void getMovieReviews(int moveId){
+        viewModel.setProgressBarVisibility(View.VISIBLE);
+        Subscription subscription = service.getMovieReviews(moveId, new NetworkCallback<MovieReview, Throwable>() {
+            @Override
+            public void onSuccess(MovieReview movieReview) {
+                viewModel.setProgressBarVisibility(View.GONE);
+                view.onLoadMovieReviews(movieReview);
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                viewModel.setProgressBarVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+        });
+        subscriptions.add(subscription);
+    }
+
+    public void onDestroy(){
+        subscriptions.clear();
     }
 }

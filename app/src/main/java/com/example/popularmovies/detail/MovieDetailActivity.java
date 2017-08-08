@@ -15,7 +15,9 @@ import android.view.MenuItem;
 import com.example.popularmovies.R;
 import com.example.popularmovies.databinding.ActivityMovieDetailBinding;
 import com.example.popularmovies.deps.AppDependenciesProvider;
+import com.example.popularmovies.detail.adapter.ReviewAdapter;
 import com.example.popularmovies.detail.adapter.TrailerAdapter;
+import com.example.popularmovies.detail.model.MovieReview;
 import com.example.popularmovies.detail.model.MovieTrailer;
 import com.example.popularmovies.home.model.Result;
 import com.example.popularmovies.services.MovieService;
@@ -28,7 +30,8 @@ import javax.inject.Inject;
 
 public class MovieDetailActivity extends AppCompatActivity implements MovieDetailView {
     public final static String MOVIE_DATA = "movie_data";
-    public final static String MOVIE_TRAILER = "movie_list";
+    public final static String MOVIE_TRAILER = "movie_trailer";
+    public final static String MOVIE_REVIEW = "movie_review";
 
     private final static String YOUTUBE_PACKAGE_NAME = "com.google.android.youtube";
     private final static String YOUTUBE_URI = "http://www.youtube.com/watch?v=";
@@ -37,7 +40,9 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     private MovieDetailPresenter presenter;
     private MovieDetailViewModel viewModel;
     private TrailerAdapter trailerAdapter;
+    private ReviewAdapter reviewAdapter;
     private MovieTrailer movieTrailer;
+    private MovieReview movieReview;
     private Result movie;
 
     @Inject
@@ -64,29 +69,33 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     @Override
     public void onViewCreated(Bundle savedInstanceState) {
-        binding.listMovieTrailers.setLayoutManager(new LinearLayoutManager(this));
+        reviewAdapter = new ReviewAdapter();
         trailerAdapter = new TrailerAdapter(trailer -> {
             Intent intent;
             String trailerURI = YOUTUBE_URI + trailer.key;
-            if(isYotubeInstalled()) {
+            if(isYouTubeInstalled()) {
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(trailerURI));
             } else {
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(trailerURI));
             }
             startActivity(intent);
         });
+        binding.listMovieTrailers.setLayoutManager(new LinearLayoutManager(this));
+        binding.listMovieReviews.setLayoutManager(new LinearLayoutManager(this));
         binding.listMovieTrailers.setAdapter(trailerAdapter);
-        presenter.loadMovieTrailers(savedInstanceState);
+        binding.listMovieReviews.setAdapter(reviewAdapter);
+        presenter.loadMovieDetails(savedInstanceState);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(MOVIE_TRAILER, movieTrailer);
+        outState.putParcelable(MOVIE_REVIEW, movieReview);
         outState.putParcelable(MOVIE_DATA, movie);
     }
 
-    private boolean isYotubeInstalled(){
+    private boolean isYouTubeInstalled(){
         try {
             getPackageManager().getPackageInfo(YOUTUBE_PACKAGE_NAME, 0);
             return true;
@@ -96,20 +105,29 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     }
 
     @Override
-    public void loadMovieTrailers() {
+    public void loadMovieDetails() {
         presenter.getMovieTrailers(movie.id);
+        presenter.getMovieReviews(movie.id);
     }
 
     @Override
-    public void reloadMovieTrailers(Bundle savedInstanceState) {
+    public void reloadMovieDetails(Bundle savedInstanceState) {
         movieTrailer = savedInstanceState.getParcelable(MOVIE_TRAILER);
+        movieReview = savedInstanceState.getParcelable(MOVIE_REVIEW);
         trailerAdapter.setTrailers(movieTrailer);
+        reviewAdapter.setReviews(movieReview);
     }
 
     @Override
     public void onLoadMovieTrailers(MovieTrailer movieTrailer) {
         trailerAdapter.setTrailers(movieTrailer);
         this.movieTrailer = movieTrailer;
+    }
+
+    @Override
+    public void onLoadMovieReviews(MovieReview movieReview) {
+        reviewAdapter.setReviews(movieReview);
+        this.movieReview = movieReview;
     }
 
     @Override
@@ -135,6 +153,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     @Override
     protected void onDestroy() {
         binding.unbind();
+        presenter.onDestroy();
         super.onDestroy();
     }
 }

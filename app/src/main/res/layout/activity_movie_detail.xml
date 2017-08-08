@@ -63,6 +63,9 @@
                             android:text="@{viewModel.movieVote}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
                 </LinearLayout>
                 <TextView
@@ -70,6 +73,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dimen_margin_default" />
+                <TextView
+                    android:text="@string/text_reviews"
+                    android:textStyle="bold"
+                    android:textColor="@color/textPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_margin_default" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/list_movie_reviews"
+                    android:minHeight="@dimen/dimen_list_min_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_margin_default"/>
                 <TextView
                     android:text="@string/text_trailers"
                     android:textStyle="bold"
@@ -79,7 +95,7 @@
                     android:layout_marginBottom="@dimen/dimen_margin_default" />
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/list_movie_trailers"
-                    android:minHeight="@dimen/dimen_trailer_list_min_height"
+                    android:minHeight="@dimen/dimen_list_min_height"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>

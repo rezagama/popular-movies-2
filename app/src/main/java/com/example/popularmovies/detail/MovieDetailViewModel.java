@@ -1,7 +1,10 @@
 package com.example.popularmovies.detail;
 
 import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+import android.view.View;
 
+import com.example.popularmovies.BR;
 import com.example.popularmovies.home.model.Result;
 
 /**
@@ -10,9 +13,12 @@ import com.example.popularmovies.home.model.Result;
 
 public class MovieDetailViewModel extends BaseObservable {
     private Result result;
+    private String favoriteBtnText;
+    private int progressBarVisibility;
 
     public MovieDetailViewModel(Result result) {
         this.result = result;
+        progressBarVisibility = View.GONE;
     }
 
     public String getMovieTitle(){
@@ -33,5 +39,25 @@ public class MovieDetailViewModel extends BaseObservable {
 
     public String getMovieVote(){
         return String.valueOf(result.voteAverage);
+    }
+
+    @Bindable
+    public int getProgressBarVisibility() {
+        return progressBarVisibility;
+    }
+
+    public void setProgressBarVisibility(int progressBarVisibility) {
+        this.progressBarVisibility = progressBarVisibility;
+        notifyPropertyChanged(BR.progressBarVisibility);
+    }
+
+    @Bindable
+    public String getFavoriteBtnText() {
+        return favoriteBtnText;
+    }
+
+    public void setFavoriteBtnText(String favoriteBtnText) {
+        this.favoriteBtnText = favoriteBtnText;
+        notifyPropertyChanged(BR.favoriteBtnText);
     }
 }

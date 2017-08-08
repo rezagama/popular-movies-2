@@ -3,14 +3,23 @@
     <string name="text_sort_by">Sort by</string>
     <string name="text_please_wait">Please wait …</string>
     <string name="text_error">Something doesn\'t feels right.\nPlease try again.</string>
-    <string-array name="sort_by_options">
+    <string-array name="filter_options">
         <item>Popularity</item>
         <item>Top Rated</item>
+        <item>Favorites</item>
     </string-array>
     <string name="text_movie_detail">Movie Detail</string>
     <string name="text_average_vote">Average Vote</string>
     <string name="text_release_date">Release Date</string>
     <string name="text_popularity">Popularity</string>
     <string name="text_top_rated">Top Rated</string>
+    <string name="text_favorites">Favorites</string>
     <string name="text_sort_by_title">Sort By</string>
+    <string name="text_trailers">Trailers</string>
+    <string name="text_reviews">Reviews</string>
+    <string name="text_add_to_favorites">Add to Favorites</string>
+    <string name="text_remove_from_favorites">Remove from Favorites</string>
+    <string name="text_added_to_favorites">Movie added to Favorites</string>
+    <string name="text_removed_from_favorites">Movie removed from Favorites</string>
+    <string name="text_browse_movie">Browse movie to add your favorites,</string>
 </resources>

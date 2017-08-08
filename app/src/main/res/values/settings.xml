@@ -3,4 +3,5 @@
     <string name="server_ver" translatable="false">3</string>
     <string name="server_url" translatable="false">https://api.themoviedb.org/%1$s/</string>
     <string name="image_url" translatable="false">http://image.tmdb.org/t/p/w185%1$s</string>
+    <string name="content_authority" translatable="false">com.example.popularmovie.app</string>
 </resources>

@@ -15,6 +15,8 @@ public interface HomeView {
 
     void onLoadMovieGrid(Movie movie);
 
+    void loadFavoritesMovie();
+
     void showProgressText();
 
     void hideProgressText();

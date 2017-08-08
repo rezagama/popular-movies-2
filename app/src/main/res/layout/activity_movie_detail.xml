@@ -6,66 +6,115 @@
             name="viewModel"
             type="com.example.popularmovies.detail.MovieDetailViewModel" />
     </data>
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout android:orientation="vertical"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_padding_default">
-            <TextView
-                android:text="@{viewModel.movieTitle}"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/dimen_text_title"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dimen_margin_default"/>
-            <LinearLayout
+            android:layout_height="match_parent">
+            <LinearLayout android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    app:imgUrl="@{viewModel.moviePoster}"
-                    android:layout_width="@dimen/dimen_movie_poster_width"
-                    android:layout_height="@dimen/dimen_movie_poster_height"
-                    android:layout_marginBottom="@dimen/dimen_margin_default"
-                    android:contentDescription="@string/app_name" />
+                android:padding="@dimen/dimen_padding_default">
+                <TextView
+                    android:text="@{viewModel.movieTitle}"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="@dimen/dimen_text_title"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_margin_default"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_margin_default"
-                    android:layout_marginStart="@dimen/dimen_margin_default"
-                    android:orientation="vertical">
-                    <TextView
-                        android:text="@string/text_release_date"
-                        android:textStyle="bold"
-                        android:textColor="@color/textPrimary"
-                        android:layout_width="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        app:imgUrl="@{viewModel.moviePoster}"
+                        android:layout_width="@dimen/dimen_movie_poster_width"
+                        android:layout_height="@dimen/dimen_movie_poster_height"
+                        android:layout_marginBottom="@dimen/dimen_margin_default"
+                        android:contentDescription="@string/app_name" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dimen_margin_small" />
-                    <TextView
-                        android:text="@{viewModel.movieReleaseDate}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dimen_margin_default" />
-                    <TextView
-                        android:text="@string/text_average_vote"
-                        android:textColor="@color/textPrimary"
-                        android:textStyle="bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dimen_margin_small" />
-                    <TextView
-                        android:text="@{viewModel.movieVote}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_marginLeft="@dimen/dimen_margin_default"
+                        android:layout_marginStart="@dimen/dimen_margin_default"
+                        android:orientation="vertical">
+                        <TextView
+                            android:text="@string/text_release_date"
+                            android:textStyle="bold"
+                            android:textColor="@color/textPrimary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dimen_margin_small" />
+                        <TextView
+                            android:text="@{viewModel.movieReleaseDate}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dimen_margin_default" />
+                        <TextView
+                            android:text="@string/text_average_vote"
+                            android:textColor="@color/textPrimary"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dimen_margin_small" />
+                        <TextView
+                            android:text="@{viewModel.movieVote}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dimen_margin_default" />
+                        <Button
+                            android:id="@+id/btn_favorite"
+                            android:text="@{viewModel.favoriteBtnText}"
+                            android:textColor="@android:color/white"
+                            android:textAllCaps="false"
+                            android:background="@color/colorPrimary"
+                            android:drawablePadding="@dimen/dimen_padding_small"
+                            android:drawableLeft="@drawable/ic_star_rate_white_18dp"
+                            android:drawableStart="@drawable/ic_star_rate_white_18dp"
+                            android:padding="@dimen/dimen_padding_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Widget.AppCompat.Button.Colored"/>
+                    </LinearLayout>
                 </LinearLayout>
+                <TextView
+                    android:text="@{viewModel.movieSynopsis}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_margin_default" />
+                <TextView
+                    android:text="@string/text_reviews"
+                    android:textStyle="bold"
+                    android:textColor="@color/textPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_margin_default" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/list_movie_reviews"
+                    android:minHeight="@dimen/dimen_list_min_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_margin_default"/>
+                <TextView
+                    android:text="@string/text_trailers"
+                    android:textStyle="bold"
+                    android:textColor="@color/textPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_margin_default" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/list_movie_trailers"
+                    android:minHeight="@dimen/dimen_list_min_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-            <TextView
-                android:text="@{viewModel.movieSynopsis}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="@{viewModel.progressBarVisibility}" />
+    </RelativeLayout>
 </layout>

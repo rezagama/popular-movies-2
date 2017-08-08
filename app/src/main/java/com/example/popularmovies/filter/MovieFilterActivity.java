@@ -31,7 +31,7 @@ public class MovieFilterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String [] options = getResources().getStringArray(R.array.sort_by_options);
+        String [] options = getResources().getStringArray(R.array.filter_options);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_filter);
 
         binding.listMovieFilter.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options) {
